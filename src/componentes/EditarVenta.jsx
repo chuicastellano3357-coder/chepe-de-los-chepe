@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import API from '../api';
 
 function EditarVenta({ venta, onCerrar, onVentaActualizada }) {
   const [formData, setFormData] = useState({
@@ -14,11 +14,11 @@ function EditarVenta({ venta, onCerrar, onVentaActualizada }) {
 
   useEffect(() => {
     // Cargar listas de estudiantes y productos
-    axios.get('http://localhost:3000/estudiantes')
+    API.get('/estudiantes')
       .then(res => setEstudiantes(res.data))
       .catch(err => console.error('Error al cargar estudiantes:', err));
 
-    axios.get('http://localhost:3000/productos')
+    API.get('/productos')
       .then(res => setProductos(res.data))
       .catch(err => console.error('Error al cargar productos:', err));
 
@@ -44,7 +44,7 @@ function EditarVenta({ venta, onCerrar, onVentaActualizada }) {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    axios.put(`http://localhost:3000/ventas/${venta.id}`, formData)
+    API.put(`/ventas/${venta.id}`, formData)
       .then(() => {
         if (onVentaActualizada) {
           onVentaActualizada();

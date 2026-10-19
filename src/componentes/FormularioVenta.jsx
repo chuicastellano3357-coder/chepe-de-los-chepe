@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import API from '../api';
 
 function FormularioVenta({ onVentaAgregada }) {
   const [formData, setFormData] = useState({
@@ -13,11 +13,11 @@ function FormularioVenta({ onVentaAgregada }) {
 
   // Cargar listas de estudiantes y productos al iniciar
   useEffect(() => {
-    axios.get('http://localhost:3000/estudiantes')
+    API.get('/estudiantes')
       .then(res => setEstudiantes(res.data))
       .catch(err => console.error(err));
 
-    axios.get('http://localhost:3000/productos')
+    API.get('/productos')
       .then(res => setProductos(res.data))
       .catch(err => console.error(err));
   }, []);
@@ -31,8 +31,8 @@ function FormularioVenta({ onVentaAgregada }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.post('http://localhost:3000/ventas', formData)
-      .then(res => {
+    API.post('/ventas', formData)
+      .then(() => {
         // Limpiar el formulario inmediatamente
         setFormData({ 
           estudiante_id: '', 

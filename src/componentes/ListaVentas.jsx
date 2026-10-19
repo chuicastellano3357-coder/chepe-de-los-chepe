@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import API from '../api';
 import EditarVenta from './EditarVenta';
 
 function ListaVentas() {
@@ -8,7 +8,7 @@ function ListaVentas() {
 
   // Cargar lista de ventas desde la API (GET)
   const cargarVentas = () => {
-    axios.get('http://localhost:3000/ventas')
+    API.get('/ventas')
       .then(res => setVentas(res.data))
       .catch(err => console.error('Error al obtener ventas:', err));
   };
@@ -19,7 +19,7 @@ function ListaVentas() {
 
   // Función para eliminar directamente sin cuadro de confirmación
   const eliminarVenta = (id) => {
-    axios.delete(`http://localhost:3000/ventas/${id}`)
+    API.delete(`/ventas/${id}`)
       .then(() => {
         cargarVentas(); // Refrescar la tabla al instante
       })
